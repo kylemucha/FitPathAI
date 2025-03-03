@@ -117,7 +117,7 @@ with col1:
     st.markdown("""
         <a href="/" target="_self" style="text-decoration: none;">
             <button style="
-                background: linear-gradient(45deg, #0099FF, #00E5FF, #FFB74D, #FF9800);
+                background: linear-gradient(45deg, #F5F5F5, #E0E0E0, #EEEEEE, #BDBDBD);
                 color: black;
                 padding: 10px 20px;
                 border: none;

@@ -8,10 +8,100 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
-# Copy the same CSS from AI_Workout_Planner.py
+# Add the same CSS styling
 st.markdown("""
     <style>
-    # ... (copy all the CSS from AI_Workout_Planner.py) ...
+    .main {
+        padding: 2rem;
+        background-color: white;
+    }
+    .container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 2rem;
+        text-align: center;
+    }
+    .welcome {
+        font-size: 3.5rem !important;
+        font-weight: 700 !important;
+        margin-bottom: 1rem !important;
+        color: #333333;
+        text-align: center;
+    }
+    .title {
+        font-size: 2rem !important;
+        font-weight: 700 !important;
+        margin-bottom: 1rem !important;
+        color: #333333;
+        text-align: center;
+    }
+    .subtitle {
+        font-size: 1.5rem !important;
+        color: #424242;
+        margin-bottom: 2rem !important;
+        text-align: center;
+        max-width: 800px;
+        margin-left: auto; 
+        margin-right: auto;
+    }
+    .feature-card {
+        padding: 1.5rem;
+        border-radius: 10px;
+        background-color: #f8f9fa;
+        margin: 1rem 0;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    .cta-button {
+        background-color: #1E88E5;
+        color: white;
+        padding: 0.8rem 2rem;
+        border-radius: 5px;
+        text-decoration: none;
+        font-weight: bold;
+        display: inline-block;
+        margin: 1rem 0;
+    }
+    .cta-button:hover {
+        background-color: #1565C0;
+    }
+    [data-testid="collapsedControl"] {
+        display: block;
+        color: #333333 !important;
+    }
+    button[kind="header"] {
+        color: #333333 !important;
+    }
+    .st-emotion-cache-7ym5gk {
+        color: #333333 !important;
+    }
+    .st-emotion-cache-1egp7i3 {
+        color: #333333 !important;
+    }
+    #MainMenu {
+        display: none;
+    }
+    .css-1rs6os {visibility: hidden;}
+    .css-17ziqus {visibility: hidden;}
+    section[data-testid="stSidebar"] {
+        display: block;
+    }
+    header {
+        display: block;
+    }
+    [data-testid="stAppViewContainer"] {
+        background-color: white;
+    }
+    [data-testid="stHeader"] {
+        background-color: white;
+    }
+    .stApp {
+        background-color: white;
+    }
+    /* Button hover effects */
+    button:hover {
+        transform: translateY(-2px) !important;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15) !important;
+    }
     </style>
 """, unsafe_allow_html=True)
 
@@ -21,7 +111,7 @@ with col1:
     st.markdown("""
         <a href="/" target="_self" style="text-decoration: none;">
             <button style="
-                background: linear-gradient(45deg, #0099FF, #00E5FF, #FFB74D, #FF9800);
+                background: linear-gradient(45deg, #F5F5F5, #E0E0E0, #EEEEEE, #BDBDBD);
                 color: black;
                 padding: 10px 20px;
                 border: none;
@@ -64,11 +154,11 @@ st.markdown("""
 
 # Check if results exist in session state
 if 'workout_results' not in st.session_state:
-    st.warning("Please complete the workout planner form first!")
+    st.markdown('<p style="color: #8B0000; font-weight: bold;">Please complete the workout planner form first!</p>', unsafe_allow_html=True)
     st.markdown("""
         <a href="/AI_Workout_Planner" target="_self" style="text-decoration: none;">
             <button style="
-                background: linear-gradient(45deg, #0099FF, #00E5FF, #FFB74D, #FF9800);
+                background: linear-gradient(45deg, #F5F5F5, #E0E0E0, #EEEEEE, #BDBDBD);
                 color: black;
                 padding: 10px 20px;
                 border: none;
@@ -77,7 +167,7 @@ if 'workout_results' not in st.session_state:
                 font-weight: bold;
                 transition: all 0.3s ease;
                 ">
-                Go to Workout Planner
+                Go to AI Workout Planner
             </button>
         </a>
     """, unsafe_allow_html=True)
@@ -121,7 +211,7 @@ else:
     st.markdown("""
         <a href="/AI_Workout_Planner" target="_self" style="text-decoration: none;">
             <button style="
-                background: linear-gradient(45deg, #0099FF, #00E5FF, #FFB74D, #FF9800);
+                background: linear-gradient(45deg, #F5F5F5, #E0E0E0, #EEEEEE, #BDBDBD);
                 color: black;
                 padding: 10px 20px;
                 border: none;

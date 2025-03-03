@@ -154,7 +154,7 @@ st.markdown("""
 st.markdown("""
     <a href="/AI_Workout_Planner" target="_self" style="text-decoration: none;">
         <button style="
-            background: linear-gradient(45deg, #0099FF, #00E5FF, #FFB74D, #FF9800);
+            background: linear-gradient(45deg, #2196F3, #64B5F6, #42A5F5, #1976D2);
             color: black;
             padding: 10px 24px;
             border: none;
@@ -172,7 +172,7 @@ st.markdown("""
 
     <a href="/AI_Meal_Planner" target="_self" style="text-decoration: none;">
         <button style="
-            background: linear-gradient(45deg, #0099FF, #00E5FF, #FFB74D, #FF9800);
+            background: linear-gradient(45deg, #FF9800, #FFB74D, #FFA726, #FF8F00);
             color: black;
             padding: 10px 24px;
             border: none;
