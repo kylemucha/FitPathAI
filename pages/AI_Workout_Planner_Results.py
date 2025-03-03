@@ -14,6 +14,7 @@ st.markdown("""
     .main {
         padding: 2rem;
         background-color: white;
+        color: black;
     }
     .container {
         max-width: 800px;
@@ -25,19 +26,19 @@ st.markdown("""
         font-size: 3.5rem !important;
         font-weight: 700 !important;
         margin-bottom: 1rem !important;
-        color: #333333;
+        color: black;
         text-align: center;
     }
     .title {
         font-size: 2rem !important;
         font-weight: 700 !important;
         margin-bottom: 1rem !important;
-        color: #333333;
+        color: black;
         text-align: center;
     }
     .subtitle {
         font-size: 1.5rem !important;
-        color: #424242;
+        color: black;
         margin-bottom: 2rem !important;
         text-align: center;
         max-width: 800px;
@@ -102,6 +103,9 @@ st.markdown("""
         transform: translateY(-2px) !important;
         box-shadow: 0 4px 12px rgba(0,0,0,0.15) !important;
     }
+    [data-testid="stMarkdown"] {
+        color: black !important;
+    }
     </style>
 """, unsafe_allow_html=True)
 
@@ -147,7 +151,7 @@ st.markdown("""
                 display: inline-block;
                 font-size: 8vh !important;
                 font-weight: 900 !important;
-            ">Your Workout Results</span>
+            ">Your Workout Plan Results</span>
         </h1>
     </div>
 """, unsafe_allow_html=True)
@@ -183,7 +187,7 @@ else:
 
     # Display workout plan
     plan = results['plan']
-    st.subheader("Your Personalized Workout Plan")
+    st.markdown('<h2 style="color: #1E88E5;">Your Personalized Workout Plan</h2>', unsafe_allow_html=True)
     
     # Display workout plan in a structured format
     st.markdown(f"**Workout Type:** {plan['workout_type']}")

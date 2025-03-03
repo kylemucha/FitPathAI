@@ -175,9 +175,9 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # Collect user inputs
-age = st.number_input("What is your age?", min_value=18, max_value=80, value=25)
+age = st.number_input("What is your age?", min_value=18, max_value=100, value=25)
 gender = st.selectbox("What is your gender?", ["Male", "Female"])
-weight = st.number_input("What is your weight (in lbs)?", min_value=88, max_value=330)
+weight = st.number_input("What is your weight (in lbs)?", min_value=75, max_value=330)
 height_feet = st.number_input("What is your height (feet)?", min_value=4, max_value=7)
 height_inches = st.number_input("Inches:", min_value=0, max_value=11)
 
@@ -185,7 +185,6 @@ height_inches = st.number_input("Inches:", min_value=0, max_value=11)
 weight_kg = weight / 2.20462
 height_m = ((height_feet * 12) + height_inches) * 0.0254
 bmi = weight_kg / (height_m ** 2)
-st.write(f"**Your BMI is:** {bmi:.2f}")
 
 # Heart rate information
 max_bpm = st.number_input("What is your maximum heart rate during exercise?", min_value=120, max_value=220, value=220-age)
