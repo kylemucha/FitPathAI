@@ -4,3 +4,4 @@ pandas
 numpy
 matplotlib
 seaborn
+fpdf==1.7.2
