@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
-from gym_chatbot import GymChatbot
+from gym_chatbot_new import GymChatbot
+import gym_ml_model_new  # Add this import
 
 # Page configuration
 st.set_page_config(
@@ -28,6 +29,10 @@ st.markdown("""
     }
     #MainMenu {
         display: none;
+    }
+    /* Make all text black by default */
+    .stMarkdown, .stMarkdown p, .stMarkdown h1, .stMarkdown h2, .stMarkdown h3, .stMarkdown h4, .stMarkdown h5, .stMarkdown h6 {
+        color: black !important;
     }
     /* Target input labels and questions */
     .css-qrbaxs {
@@ -108,6 +113,31 @@ st.markdown("""
         transform: translateY(-2px) !important;
         box-shadow: 0 4px 12px rgba(0,0,0,0.15) !important;
     }
+    /* Force black text for results */
+    .analysis-results, .workout-plan, .stMarkdown, .stMarkdown p, .stMarkdown h1, .stMarkdown h2, .stMarkdown h3, .stMarkdown h4, .stMarkdown h5, .stMarkdown h6, .stMarkdown strong, .stMarkdown em {
+        color: black !important;
+    }
+    /* Target specific Streamlit elements */
+    [data-testid="stMarkdown"] {
+        color: black !important;
+    }
+    [data-testid="stMarkdown"] p {
+        color: black !important;
+    }
+    [data-testid="stMarkdown"] strong {
+        color: black !important;
+    }
+    [data-testid="stMarkdown"] em {
+        color: black !important;
+    }
+    /* Target subheader specifically */
+    .stMarkdown h2, .stMarkdown h3 {
+        color: black !important;
+    }
+    /* Additional subheader targeting */
+    div[data-testid="stMarkdown"] h2, div[data-testid="stMarkdown"] h3 {
+        color: black !important;
+    }
     </style>
 """, unsafe_allow_html=True)
 
@@ -186,10 +216,36 @@ weight_kg = weight / 2.20462
 height_m = ((height_feet * 12) + height_inches) * 0.0254
 bmi = weight_kg / (height_m ** 2)
 
-# Heart rate information
-max_bpm = st.number_input("What is your maximum heart rate during exercise?", min_value=120, max_value=220, value=220-age)
-avg_bpm = st.number_input("What is your average heart rate during exercise?", min_value=100, max_value=200, value=int((220-age) * 0.7))
-resting_bpm = st.number_input("What is your resting heart rate?", min_value=40, max_value=100, value=70)
+# Calculate heart rates based on user characteristics
+def calculate_heart_rates(age, gender, bmi):
+    # Calculate maximum heart rate using the Tanaka formula (more accurate than 220-age)
+    max_bpm = 208 - (0.7 * age)
+    
+    # Adjust max heart rate based on BMI
+    if bmi > 30:  # Obese
+        max_bpm *= 0.95
+    elif bmi > 25:  # Overweight
+        max_bpm *= 0.97
+    
+    # Calculate average heart rate during exercise (70% of max for moderate intensity)
+    avg_bpm = int(max_bpm * 0.7)
+    
+    # Calculate resting heart rate based on age and gender
+    if gender == 'Male':
+        resting_bpm = 70 - (0.3 * (age - 20))  # Decreases with age
+    else:
+        resting_bpm = 72 - (0.3 * (age - 20))  # Slightly higher for females
+    
+    # Adjust resting heart rate based on BMI
+    if bmi > 30:  # Obese
+        resting_bpm += 5
+    elif bmi > 25:  # Overweight
+        resting_bpm += 3
+    
+    return int(max_bpm), avg_bpm, int(resting_bpm)
+
+# Calculate heart rates
+max_bpm, avg_bpm, resting_bpm = calculate_heart_rates(age, gender, bmi)
 
 # Workout session details
 session_duration = st.number_input("Typical workout session duration (hours):", min_value=0.25, max_value=3.0, value=1.0)
@@ -207,7 +263,7 @@ water_intake_liters = cups * 0.236588
 goals = st.selectbox("What is your fitness goal?", ["Weight Loss", "Muscle Building", "Cardiovascular Health", "Flexibility", "General Fitness"])
 
 # Step 2: Process the inputs
-if st.button("**Get AI Calculated Workout Plan!**"):
+if st.button("**Get AI Calculated Workout and Meal Plan!**"):
     # Prepare user information for chatbot
     user_info = {
         'Age': age,
@@ -231,48 +287,24 @@ if st.button("**Get AI Calculated Workout Plan!**"):
     predicted_workout = chatbot.workout_model.predict(user_workout)[0]
     predicted_experience = chatbot.experience_model.predict(user_experience)[0]
 
-    # Display analysis results
-    st.markdown(f"### Analysis Results")
-    st.markdown(f"- **Calories Burned per Session:** {predicted_calories:.2f}")
-    st.markdown(f"- **Recommended Workout Type:** {predicted_workout}")
-    st.markdown(f"- **Experience Level:** {predicted_experience} (1=Beginner, 2=Intermediate, 3=Advanced)")
-
     # Get workout recommendations
     recommendations = chatbot.get_exercise_recommendations(user_info, predicted_workout, predicted_experience)
 
     # Generate and display workout plan
     plan = chatbot.get_workout_plan(user_info, predicted_workout, predicted_calories, predicted_experience, recommendations)
-    st.subheader("Your Personalized Workout Plan")
-    
-    # Display workout plan in a more structured format
-    st.markdown(f"**Workout Type:** {plan['workout_type']}")
-    st.markdown(f"**Experience Level:** {plan['experience_level']}")
-    st.markdown(f"**Sessions per Week:** {plan['sessions_per_week']}")
-    st.markdown(f"**Calories per Session:** {plan['calories_per_session']}")
-    st.markdown(f"**Session Duration:** {plan['session_duration']}")
-    st.markdown(f"**Hydration Recommendation:** {plan['hydration']}")
 
-    # Display daily exercises
-    st.markdown("### Weekly Schedule")
-    for day, details in plan['daily_exercises'].items():
-        st.markdown(f"**{day}:** {details['focus']}")
-        st.markdown("- " + "\n- ".join(details['exercises']))
-
-    # Additional notes and advice
-    st.markdown("### Notes")
-    st.markdown("- Always warm up for 5-10 minutes before starting your workout")
-    st.markdown("- Cool down and stretch for 5-10 minutes after your workout")
-    st.markdown(f"- Stay hydrated! Drink {plan['hydration']} throughout the day")
-    st.markdown("- Listen to your body and adjust intensity as needed")
-    st.markdown("- For best results, follow this plan consistently for at least 4-6 weeks")
+    # Generate meal recommendations
+    nutrient_file = "nutrients_csvfile.csv"
+    meal_plan = gym_ml_model_new.generate_meal_recommendations(predicted_calories, nutrient_file, goals)
 
     # Store results in session state
     st.session_state.workout_results = {
         'predicted_calories': predicted_calories,
         'predicted_workout': predicted_workout,
         'predicted_experience': predicted_experience,
-        'plan': plan
+        'plan': plan,
+        'meal_plan': meal_plan
     }
 
-    # Redirect to results page (corrected path)
+    # Redirect to results page
     st.switch_page("pages/AI_Workout_Planner_Results.py")

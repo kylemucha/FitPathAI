@@ -21,33 +21,33 @@ st.set_page_config(
 st.markdown("""
     <style>
     .main {
-        padding: 2rem;
+        padding: 1rem;
         background-color: white;
     }
     .container {
         max-width: 800px;
         margin: 0 auto;
-        padding: 2rem;
+        padding: 1rem;
         text-align: center;
     }
     .welcome {
         font-size: 3.5rem !important;
         font-weight: 700 !important;
-        margin-bottom: 1rem !important;
+        margin-bottom: 0.5rem !important;
         color: #333333;
         text-align: center;
     }
     .title {
         font-size: 2rem !important;
         font-weight: 700 !important;
-        margin-bottom: 1rem !important;
+        margin-bottom: 0.5rem !important;
         color: #333333;
         text-align: center;
     }
     .subtitle {
         font-size: 1.5rem !important;
         color: #424242;
-        margin-bottom: 2rem !important;
+        margin-bottom: 1rem !important;
         text-align: center;
         max-width: 800px;
         margin-left: auto; 
@@ -119,12 +119,12 @@ st.markdown('<div class="container">', unsafe_allow_html=True)
 st.markdown("""
     <div style="
         width: 100%;
-        padding: 2rem;
+        padding: 1rem;
         text-align: center;
         margin: 0 auto;
     ">
         <h1 style="
-            margin-bottom: 2rem !important;
+            margin-bottom: 1rem !important;
             line-height: 1.2 !important;
             padding: 0 !important;
         ">
@@ -132,7 +132,13 @@ st.markdown("""
                 color: #333333;
                 font-size: 12vh !important;
                 font-weight: 900 !important;
-            ">Welcome to </span>
+            ">Welcome to</span>
+        </h1>
+        <h1 style="
+            margin-bottom: 1rem !important;
+            line-height: 1.2 !important;
+            padding: 0 !important;
+        ">
             <span style="
                 background: linear-gradient(45deg, #0099FF, #00E5FF, #FFB74D, #FF9800);
                 -webkit-background-clip: text;
@@ -166,25 +172,7 @@ st.markdown("""
             font-weight: bold;
             transition: all 0.3s ease;
             ">
-            Try our AI Workout Planner!
-        </button>
-    </a>
-
-    <a href="/AI_Meal_Planner" target="_self" style="text-decoration: none;">
-        <button style="
-            background: linear-gradient(45deg, #FF9800, #FFB74D, #FFA726, #FF8F00);
-            color: black;
-            padding: 10px 24px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 16px;
-            margin: 1rem auto;
-            display: block;
-            font-weight: bold;
-            transition: all 0.3s ease;
-            ">
-            Try our AI Meal Planner!
+            Try our AI Workout and Meal Planner
         </button>
     </a>
 """, unsafe_allow_html=True)
